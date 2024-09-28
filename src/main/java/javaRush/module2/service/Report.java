@@ -1,24 +1,30 @@
 package javaRush.module2.service;
 
-import de.vandermeer.asciitable.AsciiTable;
 import javaRush.module2.model.Cell;
-import javaRush.module2.model.Creature;
+import javaRush.module2.model.Point;
 import javaRush.module2.model.animal.Animal;
-import lombok.Getter;
 
 import java.util.List;
+import java.util.Map;
 
+import static javaRush.module2.service.Settings.ASTERICS_LINE;
 import static javaRush.module2.service.Settings.LINE;
 
 public class Report {
+    private final Map<Point, Cell> mapIsland;
+    private SelectCreature selectCreature;
+    private final int x_size;
+    private final int y_size;
 
+    public Report(Map<Point, Cell> mapIsland, int x_size, int y_size) {
+        this.mapIsland = mapIsland;
+        this.x_size = x_size;
+        this.y_size = y_size;
 
-    private AsciiTable table = new AsciiTable();
+    }
 
     public void printIslandInfo() {
-//        System.out.printf("*** Island size: x=%d, y=%d ***", xSize, ySize);
-        System.out.println();
-        System.out.println(LINE);
+        selectCreature = new SelectCreature(mapIsland);
         /* print island's cells (rows and columns)
         ___________________________________________
         | herbivore-6 | herbivore-10 | herbivore-20 |
@@ -26,17 +32,24 @@ public class Report {
         | plant-100   | plant-78     | plant-18     |
         ---------------------------------------------
         */
-
         System.out.println();
-        System.out.println(LINE);
-
-//                System.out.println("-".repeat( 15 * xSize));
-//                System.out.printf("| %-15s%-%d ", );
-        table.addRule();
+        System.out.printf("**********  ISLAND INFO: \uD83D\uDC79-predators(total %d), " +
+                        "\uD83D\uDC07-herbivores(total %d), \uD83C\uDF3F-plants(total %d) **********",
+                selectCreature.getPredators().size(), selectCreature.getHerbivores().size(), selectCreature.getPlants().size());
+        System.out.println();
+        for (int y = 0; y < y_size; y++) {
+            System.out.println(LINE);
+            for (int x = 0; x < x_size; x++) {
+                printCellInfo(mapIsland.get(new Point(x, y)));
+            }
+            System.out.println();
+        }
+        System.out.println(ASTERICS_LINE);
     }
 
 
     public void printCellInfo(Cell cell) {
+
         int predatorNumber = cell.getPredators().size();
         int herbivoresNumber = cell.getHerbivores().size();
         int plantsNumber = cell.getPlants().size();

@@ -15,13 +15,12 @@ import java.util.Random;
 @Getter
 public abstract class Animal extends Creature implements Eatable, Moveable, Reproducable {
 
-    private int health;
+//    private int health;
     private int speed;
     private double kgToFullSaturation;
 
     public Animal(double weight, int maxCreatureOnCell, int x, int y, int health, int speed, double kgToFullSaturation) {
-        super(weight, maxCreatureOnCell, x, y);
-        this.health = health;
+        super(weight, maxCreatureOnCell, x, y, health);
         this.speed = speed;
         this.kgToFullSaturation = kgToFullSaturation;
     }
@@ -37,13 +36,13 @@ public abstract class Animal extends Creature implements Eatable, Moveable, Repr
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), health, speed, kgToFullSaturation);
+        return Objects.hash(super.hashCode(), speed, kgToFullSaturation);
     }
 
     @Override
     public String toString() {
         return "Animal{ id= " + super.getId() + "weight=" + super.getWeight() + ", maxCreatureOnCell=" + super.getMaxCreatureOnCell() +
-                ", health=" + health +
+                ", health=" + super.getHealth() +
                 ", speed=" + speed +
                 ", kgToFullSaturation=" + kgToFullSaturation +
                 '}';

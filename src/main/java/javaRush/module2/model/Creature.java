@@ -16,13 +16,16 @@ public abstract class Creature {
     private int x;
     @Setter
     private int y;
+    @Setter
+    private int health;
 
     private static long idCounter = 0;
-    public Creature(double weight, int maxCreatureOnCell, int x, int y) {
+    public Creature(double weight, int maxCreatureOnCell, int x, int y, int health) {
         this.weight = weight;
         this.maxCreatureOnCell = maxCreatureOnCell;
         this.x = x;
         this.y = y;
+        this.health = health;
         this.id = ++idCounter;
     }
 

@@ -6,8 +6,8 @@ import javaRush.module2.model.Creature;
 public abstract class Plant extends Creature {
 
 
-    public Plant(double weight, int maxCreatureOnCell,  int x, int y) {
-        super(weight, maxCreatureOnCell, x, y);
+    public Plant(double weight, int maxCreatureOnCell,  int x, int y, int health) {
+        super(weight, maxCreatureOnCell, x, y, health);
     }
 
 

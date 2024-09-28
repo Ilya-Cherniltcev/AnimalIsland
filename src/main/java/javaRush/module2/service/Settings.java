@@ -13,6 +13,8 @@ import java.util.Set;
 
 public class Settings {
     public static String LINE = "_______________________________________________________________________________________________________________________________________________________";
+//      public static String ASTERICS_LINE = "";
+    public static String ASTERICS_LINE = "********************************************************************************************************************************************************";
     public static Set<Class<? extends Creature>> creatureSet = new HashSet<>(Set.of(
             Bear.class,
             Eagle.class,
@@ -132,23 +134,26 @@ public class Settings {
     public static double BEAR_SATURATION = 80;
 
     public static double EAGLE_WEIGHT = 6;
-    public static int EAGLE_MAX_ON_CELL = 20;
+    public static int EAGLE_MAX_ON_CELL = 2;
+//    public static int EAGLE_MAX_ON_CELL = 20;
     public static int EAGLE_SPEED = 3;
     public static double EAGLE_SATURATION = 1;
 
     public static double FOX_WEIGHT = 8;
-    public static int FOX_MAX_ON_CELL = 30;
+    public static int FOX_MAX_ON_CELL = 1;
+//    public static int FOX_MAX_ON_CELL = 30;
     public static int FOX_SPEED = 2;
     public static double FOX_SATURATION = 2;
 
     public static double SNAKE_WEIGHT = 15;
-    public static int SNAKE_MAX_ON_CELL = 30;
+    public static int SNAKE_MAX_ON_CELL = 1;
+//    public static int SNAKE_MAX_ON_CELL = 30;
     public static int SNAKE_SPEED = 1;
     public static double SNAKE_SATURATION = 3;
 
 
     public static double WOLF_WEIGHT = 50;
-    public static int WOLF_MAX_ON_CELL = 2;
+    public static int WOLF_MAX_ON_CELL = 1;
 //    public static int WOLF_MAX_ON_CELL = 30;
     public static int WOLF_SPEED = 3;
     public static double WOLF_SATURATION = 8;
@@ -156,7 +161,7 @@ public class Settings {
 
     // === Plants ===
     public static double GRASS_WEIGHT = 1;
-    public static int GRASS_MAX_ON_CELL = 5;
+    public static int GRASS_MAX_ON_CELL = 3;
 //    public static int GRASS_MAX_ON_CELL = 2_000;
 
 }

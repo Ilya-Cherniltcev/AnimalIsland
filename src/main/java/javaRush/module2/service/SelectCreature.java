@@ -1,0 +1,48 @@
+package javaRush.module2.service;
+
+import javaRush.module2.model.Cell;
+import javaRush.module2.model.Creature;
+import javaRush.module2.model.Point;
+import javaRush.module2.model.animal.Animal;
+import javaRush.module2.model.animal.herbivore.Herbivore;
+import javaRush.module2.model.animal.predator.Predator;
+import javaRush.module2.model.plant.Plant;
+import lombok.AccessLevel;
+import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+@Getter
+public class SelectCreature {
+    @Getter(AccessLevel.PRIVATE)
+    private Map<Point, Cell> mapIsland;
+    private List<Animal> animals;
+    private List<Predator> predators;
+    private List<Herbivore> herbivores;
+    private List<Plant> plants;
+
+    private List<Creature> creatures;
+
+    public SelectCreature(Map<Point, Cell> mapIsland) {
+        this.mapIsland = mapIsland;
+        this.animals = new ArrayList<>();
+        this.predators = new ArrayList<>();
+        this.herbivores = new ArrayList<>();
+        this.plants = new ArrayList<>();
+        this.creatures = new ArrayList<>();
+        getAllCreatures();
+    }
+
+
+    private void getAllCreatures() {
+        for (Map.Entry<Point, Cell> entry : mapIsland.entrySet()) {
+            Cell tempCell = entry.getValue();
+            animals.addAll(tempCell.getAnimals());
+            predators.addAll(tempCell.getPredators());
+            herbivores.addAll(tempCell.getHerbivores());
+            plants.addAll(tempCell.getPlants());
+            creatures.addAll(tempCell.getCreatures());
+        }
+    }
+}
