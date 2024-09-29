@@ -10,10 +10,9 @@ import lombok.Setter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
-import static javaRush.module2.service.Settings.*;
+import static javaRush.module2.service.CreatureSettings.*;
 
 
 @Getter

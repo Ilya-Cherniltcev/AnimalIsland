@@ -1,6 +1,6 @@
 package javaRush.module2.model.animal.herbivore;
 
-import static javaRush.module2.service.Settings.*;
+import static javaRush.module2.service.CreatureSettings.*;
 
 // Гусеница -----------------
 

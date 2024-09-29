@@ -6,9 +6,10 @@ import javaRush.module2.model.animal.Animal;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-import static javaRush.module2.service.Settings.ASTERICS_LINE;
-import static javaRush.module2.service.Settings.LINE;
+import static javaRush.module2.service.CreatureSettings.ASTERICS_LINE;
+import static javaRush.module2.service.CreatureSettings.LINE;
 
 public class Report {
     private final Map<Point, Cell> mapIsland;

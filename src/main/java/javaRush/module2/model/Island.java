@@ -3,13 +3,14 @@ package javaRush.module2.model;
 import javaRush.module2.model.animal.herbivore.Herbivore;
 import javaRush.module2.model.animal.predator.Predator;
 import javaRush.module2.model.plant.Plant;
-import javaRush.module2.service.EatProcess;
-import javaRush.module2.service.MovingProcess;
-import javaRush.module2.service.Report;
-import javaRush.module2.service.SelectCreature;
+import javaRush.module2.service.*;
 import lombok.Getter;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @Getter
 public class Island {
@@ -23,8 +24,9 @@ public class Island {
     private  List<Herbivore> herbivoresTotal;
     private  List<Plant> plantsTotal;
     private MovingProcess movingProcess;
+    private ReproduceProcess reproduceProcess;
     private EatProcess eatProcess;
-
+//    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(4);
 
     public Island(int x_size, int y_size) {
         this.x_size = x_size;
@@ -54,56 +56,27 @@ public class Island {
         plantsTotal = selectCreature.getPlants();
         report = new Report(mapIsland, x_size, y_size);
         movingProcess = new MovingProcess(mapIsland, x_size, y_size);
+        reproduceProcess = new ReproduceProcess(mapIsland, x_size, y_size);
         eatProcess = new EatProcess(mapIsland);
     }
 
 
 
-    private void eatProcessing() {
-        eatProcess.eatEverybody();
-    }
-
-    private void moveProcessing(){
-        movingProcess.moveEverybody();
-    }
 
     public void lifeIsStarting() {
-
-        report.printIslandInfo();
-
-        for (int i = 0; i <10; i++) {
-            moveProcessing();
-            eatProcessing();
+        for (int i = 0; i < 5; i++) {
             report.printIslandInfo();
+            movingProcess.moveEverybody();
+            eatProcess.eatEverybody();
+            reproduceProcess.letsReproduce();
+
         }
 
-//        report.printAnimalsCoordinates(predatorsTotal);
-//        report.printAnimalsCoordinates(herbivoresTotal);
+//        scheduler.scheduleAtFixedRate(eatProcess :: eatEverybody, 0, 500, TimeUnit.MILLISECONDS);
+//        scheduler.scheduleAtFixedRate(movingProcess :: moveEverybody, 0, 500, TimeUnit.MILLISECONDS);
+//        scheduler.scheduleAtFixedRate(reproduceProcess :: letsReproduce, 0, 500, TimeUnit.MILLISECONDS);
+//        scheduler.scheduleAtFixedRate(report :: printIslandInfo, 0, 2, TimeUnit.SECONDS);
 
-//        report.printAnimalsCoordinates(predatorsTotal);
-//        report.printAnimalsCoordinates(herbivoresTotal);
-
-
-//        int xTemp = 3;
-//        int yTemp = 3;
-
-//        for(Map.Entry<Point, Cell> entry : mapIsland.entrySet()){
-//            System.out.println(entry.getKey() + ": ");
-//            System.out.println("Predators: " + entry.getValue().getPredators().size() + " | Herbivores: "
-//                   + entry.getValue().getHerbivores().size() );
-//        }
-//        for (int i = 1; i < 30; i++) {
-//            Point tempPoint = new Point(xTemp, yTemp);
-//            report.printCellInfo(mapIsland.get(tempPoint));
-//            System.out.println("**** Everybody is eating... *** Iteration - " + i);
-//            mapIsland.get(tempPoint).eatEverybody();
-//            System.out.println("================================================================");
-//            try {
-//                TimeUnit.SECONDS.sleep(1);
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
     }
 
 }

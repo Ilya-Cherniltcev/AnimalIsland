@@ -1,7 +1,7 @@
 package javaRush.module2.model.plant;
 
 
-import static javaRush.module2.service.Settings.*;
+import static javaRush.module2.service.CreatureSettings.*;
 
 public class Grass extends Plant {
     public Grass(double weight, int maxCreatureOnCell, int x, int y, int health) {

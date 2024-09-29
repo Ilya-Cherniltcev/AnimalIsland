@@ -1,8 +1,6 @@
 package javaRush.module2.model.animal.predator;
 
-import javaRush.module2.model.Creature;
 import javaRush.module2.model.animal.Animal;
-import lombok.*;
 
 // Хищник -----------------------------
 

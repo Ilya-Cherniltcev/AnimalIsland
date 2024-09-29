@@ -3,7 +3,7 @@ package javaRush.module2.service;
 import javaRush.module2.model.Creature;
 import lombok.NoArgsConstructor;
 
-import static javaRush.module2.service.Settings.HEALTH_DECREASE_VALUE;
+import static javaRush.module2.service.CreatureSettings.HEALTH_DECREASE_VALUE;
 
 @NoArgsConstructor
 public class Health {

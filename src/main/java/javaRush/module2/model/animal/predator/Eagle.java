@@ -1,6 +1,6 @@
 package javaRush.module2.model.animal.predator;
 
-import static javaRush.module2.service.Settings.*;
+import static javaRush.module2.service.CreatureSettings.*;
 
 // Орел -----------------
 public class Eagle extends Predator {

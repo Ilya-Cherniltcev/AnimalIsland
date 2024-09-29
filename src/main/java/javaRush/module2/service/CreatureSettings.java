@@ -4,14 +4,13 @@ import javaRush.module2.model.Creature;
 import javaRush.module2.model.animal.herbivore.*;
 import javaRush.module2.model.animal.predator.*;
 import javaRush.module2.model.plant.Grass;
-import javaRush.module2.model.plant.Plant;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Settings {
+public class CreatureSettings {
     public static String LINE = "_______________________________________________________________________________________________________________________________________________________";
 //      public static String ASTERICS_LINE = "";
     public static String ASTERICS_LINE = "********************************************************************************************************************************************************";
@@ -71,37 +70,37 @@ public class Settings {
     public static double CATERPILLAR_SATURATION = 0;
 
     public static double COW_WEIGHT = 700;
-    public static int COW_MAX_ON_CELL = 2;
+    public static int COW_MAX_ON_CELL = 5;
 //    public static int COW_MAX_ON_CELL = 10;
     public static int COW_SPEED = 3;
     public static double COW_SATURATION = 100;
 
     public static double DEER_WEIGHT = 300;
-    public static int DEER_MAX_ON_CELL = 1;
+    public static int DEER_MAX_ON_CELL = 10;
 //    public static int DEER_MAX_ON_CELL = 20;
     public static int DEER_SPEED = 4;
     public static double DEER_SATURATION = 50;
 
     public static double DUCK_WEIGHT = 1;
-    public static int DUCK_MAX_ON_CELL = 1;
+    public static int DUCK_MAX_ON_CELL = 10;
 //    public static int DUCK_MAX_ON_CELL = 200;
     public static int DUCK_SPEED = 4;
     public static double DUCK_SATURATION = 0.15;
 
     public static double GOAT_WEIGHT = 60;
-    public static int GOAT_MAX_ON_CELL = 1;
+    public static int GOAT_MAX_ON_CELL = 10;
 //    public static int GOAT_MAX_ON_CELL = 140;
     public static int GOAT_SPEED = 3;
     public static double GOAT_SATURATION = 10;
 
     public static double HAMSTER_WEIGHT = 0.05;
-    public static int HAMSTER_MAX_ON_CELL = 1;
+    public static int HAMSTER_MAX_ON_CELL = 10;
 //    public static int HAMSTER_MAX_ON_CELL = 500;
     public static int HAMSTER_SPEED = 1;
     public static double HAMSTER_SATURATION = 0.01;
 
     public static double HARE_WEIGHT = 2;
-    public static int HARE_MAX_ON_CELL = 1;
+    public static int HARE_MAX_ON_CELL = 10;
 //    public static int HARE_MAX_ON_CELL = 150;
     public static int HARE_SPEED = 2;
     public static double HARE_SATURATION = 0.45;
@@ -128,32 +127,32 @@ public class Settings {
 
     // === predators ===
     public static double BEAR_WEIGHT = 500;
-    public static int BEAR_MAX_ON_CELL = 1;
+    public static int BEAR_MAX_ON_CELL = 4;
 //    public static int BEAR_MAX_ON_CELL = 5;
     public static int BEAR_SPEED = 2;
     public static double BEAR_SATURATION = 80;
 
     public static double EAGLE_WEIGHT = 6;
-    public static int EAGLE_MAX_ON_CELL = 2;
+    public static int EAGLE_MAX_ON_CELL = 5;
 //    public static int EAGLE_MAX_ON_CELL = 20;
     public static int EAGLE_SPEED = 3;
     public static double EAGLE_SATURATION = 1;
 
     public static double FOX_WEIGHT = 8;
-    public static int FOX_MAX_ON_CELL = 1;
+    public static int FOX_MAX_ON_CELL = 6;
 //    public static int FOX_MAX_ON_CELL = 30;
     public static int FOX_SPEED = 2;
     public static double FOX_SATURATION = 2;
 
     public static double SNAKE_WEIGHT = 15;
-    public static int SNAKE_MAX_ON_CELL = 1;
+    public static int SNAKE_MAX_ON_CELL = 5;
 //    public static int SNAKE_MAX_ON_CELL = 30;
     public static int SNAKE_SPEED = 1;
     public static double SNAKE_SATURATION = 3;
 
 
     public static double WOLF_WEIGHT = 50;
-    public static int WOLF_MAX_ON_CELL = 1;
+    public static int WOLF_MAX_ON_CELL = 5;
 //    public static int WOLF_MAX_ON_CELL = 30;
     public static int WOLF_SPEED = 3;
     public static double WOLF_SATURATION = 8;
@@ -161,7 +160,7 @@ public class Settings {
 
     // === Plants ===
     public static double GRASS_WEIGHT = 1;
-    public static int GRASS_MAX_ON_CELL = 3;
+    public static int GRASS_MAX_ON_CELL = 5;
 //    public static int GRASS_MAX_ON_CELL = 2_000;
 
 }

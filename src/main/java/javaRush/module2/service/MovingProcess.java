@@ -1,6 +1,5 @@
 package javaRush.module2.service;
 
-
 import javaRush.module2.model.Cell;
 import javaRush.module2.model.Creature;
 import javaRush.module2.model.Point;
@@ -8,11 +7,10 @@ import javaRush.module2.model.animal.Animal;
 import javaRush.module2.model.animal.herbivore.Herbivore;
 import javaRush.module2.model.animal.predator.Predator;
 import javaRush.module2.model.plant.Plant;
-import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class MovingProcess {
     private final int x_size;
@@ -82,5 +80,4 @@ public class MovingProcess {
             }
         }
     }
-
 }

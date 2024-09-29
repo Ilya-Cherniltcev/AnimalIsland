@@ -1,12 +1,13 @@
 package javaRush.module2.model;
 
+import javaRush.module2.interfaces.Reproducible;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-public abstract class Creature {
+public abstract class Creature implements Reproducible {
     private long id;
     @Setter
     private double weight;
@@ -29,6 +30,12 @@ public abstract class Creature {
         this.id = ++idCounter;
     }
 
+    @Override
+    public boolean reproduce(Creature creature1, Creature creature2) {
+        // Two creatures can reproduce if its health >= 50% and they are the same kind
+        return creature1.health >= 50 && creature2.health >= 50
+                && creature1.getClass() == creature2.getClass() && creature1.getId() != creature2.getId();
+    }
 
     @Override
     public String toString() {

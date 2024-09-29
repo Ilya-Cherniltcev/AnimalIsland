@@ -2,7 +2,7 @@ package javaRush.module2.model.animal;
 
 import javaRush.module2.interfaces.Eatable;
 import javaRush.module2.interfaces.Moveable;
-import javaRush.module2.interfaces.Reproducable;
+import javaRush.module2.interfaces.Reproducible;
 import javaRush.module2.model.Point;
 import javaRush.module2.model.Creature;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import java.util.Random;
 
 @Setter
 @Getter
-public abstract class Animal extends Creature implements Eatable, Moveable, Reproducable {
+public abstract class Animal extends Creature implements Eatable, Moveable {
 
 //    private int health;
     private int speed;
@@ -109,8 +109,4 @@ public abstract class Animal extends Creature implements Eatable, Moveable, Repr
         return newPoint;
     }
 
-    @Override
-    public void reproduce() {
-
-    }
 }

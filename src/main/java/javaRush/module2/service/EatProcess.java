@@ -2,21 +2,15 @@ package javaRush.module2.service;
 
 import javaRush.module2.model.Cell;
 import javaRush.module2.model.Creature;
-import javaRush.module2.model.Island;
 import javaRush.module2.model.Point;
 import javaRush.module2.model.animal.Animal;
-import javaRush.module2.model.animal.herbivore.Herbivore;
-import javaRush.module2.model.animal.predator.Predator;
 import javaRush.module2.model.plant.Plant;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Synchronized;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static javaRush.module2.service.Settings.HEALTH_DECREASE_VALUE;
-import static javaRush.module2.service.Settings.PROBABILITY_TO_EAT;
+import static javaRush.module2.service.CreatureSettings.PROBABILITY_TO_EAT;
 
 public class EatProcess {
     private Health health = new Health();
@@ -54,7 +48,6 @@ public class EatProcess {
             Class<? extends Creature> preyClass = null;
             for (Map.Entry<Class<? extends Creature>, Integer> clazz : possiblePreyClasses.entrySet()) {
                 if (probablyToEat >= clazz.getValue()) {
-//                    max = clazz.getValue();
                     preyClass = clazz.getKey();
                     break;
                 }
@@ -89,5 +82,4 @@ public class EatProcess {
         }
         return someCell;
     }
-
 }

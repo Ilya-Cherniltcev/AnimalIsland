@@ -1,6 +1,5 @@
 package javaRush.module2.model.plant;
 
-import javaRush.module2.interfaces.Reproducable;
 import javaRush.module2.model.Creature;
 
 public abstract class Plant extends Creature {
