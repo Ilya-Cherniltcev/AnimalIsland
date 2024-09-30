@@ -64,12 +64,12 @@ public class Island {
 
 
     public void lifeIsStarting() {
+        report.printIslandInfo();
         for (int i = 0; i < 5; i++) {
-            report.printIslandInfo();
             movingProcess.moveEverybody();
             eatProcess.eatEverybody();
             reproduceProcess.letsReproduce();
-
+            report.printIslandInfo();
         }
 
 //        scheduler.scheduleAtFixedRate(eatProcess :: eatEverybody, 0, 500, TimeUnit.MILLISECONDS);

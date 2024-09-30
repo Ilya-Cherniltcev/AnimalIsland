@@ -3,6 +3,7 @@ package javaRush.module2.service;
 import javaRush.module2.model.Cell;
 import javaRush.module2.model.Creature;
 import javaRush.module2.model.Point;
+import javaRush.module2.model.plant.Plant;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -41,15 +42,15 @@ public class ReproduceProcess {
                 for (Creature man : men) {
                     // Now we think that plant can't reproduce - skip iteration
                     // Then we can change it logics
-//                    if (man instanceof Plant) {
-//                        continue;
-//                    }
+                    if (man instanceof Plant) {
+                        continue;
+                    }
                     for (Creature woman : women) {
                         // Now we think that plant can't reproduce - skip iteration
                         // Then we can change it logics
-//                        if (woman instanceof Plant) {
-//                            continue;
-//                        }
+                        if (woman instanceof Plant) {
+                            continue;
+                        }
                         // check possible max number this kind of creature in the cell
                         int maxCreaturesInTheCell = man.getMaxCreatureOnCell();
                         // check fact number of creatures
