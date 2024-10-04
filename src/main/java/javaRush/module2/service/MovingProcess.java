@@ -9,13 +9,13 @@ import javaRush.module2.model.animal.predator.Predator;
 import javaRush.module2.model.plant.Plant;
 
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-public class MovingProcess {
+public class MovingProcess implements Runnable {
     private final int x_size;
     private final int y_size;
-    private Map<Point, Cell> mapIsland;
+    private ConcurrentMap<Point, Cell> mapIsland;
     private SelectCreature selectCreature;
     private List<Predator> predators;
     private List<Herbivore> herbivores;
@@ -24,19 +24,24 @@ public class MovingProcess {
     private List<Creature> creatures;
     private Health health = new Health();
 
-    public MovingProcess(Map<Point, Cell> mapIsland, int x_size, int y_size) {
+    public MovingProcess(ConcurrentMap<Point, Cell> mapIsland, int x_size, int y_size) {
         this.x_size = x_size;
         this.y_size = y_size;
         this.mapIsland = mapIsland;
         selectCreature = new SelectCreature(mapIsland);
-        predators = selectCreature.getPredators();
-        herbivores = selectCreature.getHerbivores();
-        plants = selectCreature.getPlants();
-        animals = selectCreature.getAnimals();
-        creatures = selectCreature.getCreatures();
+        predators = new CopyOnWriteArrayList<>(selectCreature.getPredators());
+        herbivores = new CopyOnWriteArrayList<>(selectCreature.getHerbivores());
+        plants = new CopyOnWriteArrayList<>(selectCreature.getPlants());
+        animals = new CopyOnWriteArrayList<>(selectCreature.getAnimals());
+        creatures = new CopyOnWriteArrayList<>(selectCreature.getCreatures());
     }
 
-    public void moveEverybody() {
+    /**
+     * All animals are moving
+     *
+     */
+    @Override
+    public void run() {
         // let animals move
         for (Creature each : creatures) {
             // plant can't move - skip iteration
@@ -56,8 +61,7 @@ public class MovingProcess {
             int maxAnimalsInTheCell = animal.getMaxCreatureOnCell();
             int animalsInNewCell = 0;
             try {
-                List<Animal> animalsTemp = mapIsland.get(newCoordinates).getAnimals();
-
+                List<Animal> animalsTemp = new CopyOnWriteArrayList<>(mapIsland.get(newCoordinates).getAnimals());
                 if (animalsTemp != null && !animalsTemp.isEmpty()) {
                     for (Animal some : animalsTemp) {
                         if (some != null && some.equals(animal)) {

@@ -10,8 +10,8 @@ import java.util.Objects;
 @Getter
 @Data
 public class Point {
-    private int x;
-    private int y;
+    private volatile int x;
+    private volatile int y;
 
 }
 

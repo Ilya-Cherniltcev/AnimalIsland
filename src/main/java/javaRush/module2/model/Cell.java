@@ -8,9 +8,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static javaRush.module2.service.CreatureSettings.*;
 
@@ -18,6 +18,7 @@ import static javaRush.module2.service.CreatureSettings.*;
 @Getter
 public class Cell {
     private List<Animal> animals;
+
     private List<Predator> predators;
     private List<Herbivore> herbivores;
     private List<Plant> plants;
@@ -26,23 +27,26 @@ public class Cell {
     private List<Creature> creatures;
 
     public Cell(Point point) {
-        this.animals = new ArrayList<>();
-        this.predators = new ArrayList<>();
-        this.herbivores = new ArrayList<>();
-        this.plants = new ArrayList<>();
+        this.animals = new CopyOnWriteArrayList<>();
+        this.predators = new CopyOnWriteArrayList<>();
+        this.herbivores = new CopyOnWriteArrayList<>();
+        this.plants = new CopyOnWriteArrayList<>();
         this.point = point;
-        this.creatures = new ArrayList<>();
+        this.creatures = new CopyOnWriteArrayList<>();
         initCreatures();
     }
 
+    /**
+     * Birth of creatures in the cell
+     * (we apply mechanism of reflection)
+     */
     private void initCreatures() {
-        Random random = new Random();
-        for (Class<? extends Creature> creatureClass : creatureSet) {
+        for (Class<? extends Creature> creatureClass : CREATURE_SET) {
             try {
                 // We make instance of the class for checking of max probably number of thing creating in the cell
                 Creature testCreature = creatureClass.getDeclaredConstructor().newInstance();
                 // Take max numbers of animals in the cell, use Random to this number...
-                int creatureNumbersForCell = random.nextInt(testCreature.getMaxCreatureOnCell()) + 1;
+                int creatureNumbersForCell = ThreadLocalRandom.current().nextInt(testCreature.getMaxCreatureOnCell()) + 1;
 
                 for (int i = 0; i < creatureNumbersForCell; i++) {
                     Creature creature = creatureClass.getDeclaredConstructor().newInstance();
@@ -57,13 +61,18 @@ public class Cell {
                 }
             } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
                      InvocationTargetException e) {
-                e.printStackTrace();
+                throw new RuntimeException("Creature is not created!");
             }
         }
         animals.addAll(predators);
         animals.addAll(herbivores);
     }
 
+    /**
+     * Add creature to lists
+     *
+     * @param creature any creature which we have to add
+     */
     public void addCreature(Creature creature) {
         creatures.add(creature);
         if (creature instanceof Predator) {
@@ -76,20 +85,25 @@ public class Cell {
             plants.add((Plant) creature);
         }
     }
-   public void deleteCreature(Creature creature) {
-       if (creature != null) {
-           creatures.remove(creature);
-           if (creature instanceof Predator) {
-               predators.remove(creature);
-               animals.remove(creature);
-           } else if (creature instanceof Herbivore) {
-               herbivores.remove(creature);
-               animals.remove(creature);
-           } else if (creature instanceof Plant) {
-               plants.remove(creature);
-           }
-       }
-   }
 
+    /**
+     * Erasing of the creature from lists
+     *
+     * @param creature any creature which we have to erase
+     */
+    public void deleteCreature(Creature creature) {
+        if (creature != null) {
+            creatures.remove(creature);
+            if (creature instanceof Predator) {
+                predators.remove(creature);
+                animals.remove(creature);
+            } else if (creature instanceof Herbivore) {
+                herbivores.remove(creature);
+                animals.remove(creature);
+            } else if (creature instanceof Plant) {
+                plants.remove(creature);
+            }
+        }
+    }
 }
 

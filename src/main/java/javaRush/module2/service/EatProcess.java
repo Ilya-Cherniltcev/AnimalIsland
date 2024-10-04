@@ -1,5 +1,6 @@
 package javaRush.module2.service;
 
+import javaRush.module2.Main;
 import javaRush.module2.model.Cell;
 import javaRush.module2.model.Creature;
 import javaRush.module2.model.Point;
@@ -8,30 +9,37 @@ import javaRush.module2.model.plant.Plant;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static javaRush.module2.service.CreatureSettings.PROBABILITY_TO_EAT;
 
-public class EatProcess {
-    private Health health = new Health();
-    private Map<Point, Cell> mapIsland;
+public class EatProcess implements Runnable{
+    private volatile Health health = new Health();
+    private ConcurrentMap<Point, Cell> mapIsland;
 
-    public EatProcess(Map<Point, Cell> mapIsland) {
+    public EatProcess(ConcurrentMap<Point, Cell> mapIsland) {
         this.mapIsland = mapIsland;
     }
 
-    public void eatEverybody() {
-        for (Map.Entry<Point, Cell> entry : mapIsland.entrySet()) {
-            entry.setValue(eatingInCell(entry.getValue()));
-        }
+    public void run() {
+            for (Map.Entry<Point, Cell> entry : mapIsland.entrySet()) {
+                entry.setValue(eatingInCell(entry.getValue()));
+            }
     }
 
+    /**
+     * Process of eating (check every creature in the cell)
+     *
+     * @param someCell  cell where is creatures are eating each other
+     * @return modificated cell
+     */
     private Cell eatingInCell(Cell someCell) {
-//        List<Creature> creatures = Collections.synchronizedList(cell.getCreatures());
-        List<Creature> creatures = someCell.getCreatures();
+        List<Creature> creatures = new CopyOnWriteArrayList<>(someCell.getCreatures());
         // make copies of creatures: hunters and preys
-        List<Creature> preys = new ArrayList<>(creatures);
-        List<Creature> hunters = new ArrayList<>(creatures);
+        List<Creature> preys = new CopyOnWriteArrayList<>(creatures);
+        List<Creature> hunters = new CopyOnWriteArrayList<>(creatures);
         for (Creature hunter : hunters) {
             /* Here "hunter" can be real predator or herbivore as "predator" for plant
                 (and some cases for example duck = predator for caterpillar etc.)
@@ -42,7 +50,7 @@ public class EatProcess {
             if (hunter instanceof Plant | idCreatureInList < 0) {
                 continue;
             }
-            Map<Class<? extends Creature>, Integer> possiblePreyClasses = PROBABILITY_TO_EAT.get(hunter.getClass());
+            ConcurrentMap<Class<? extends Creature>, Integer> possiblePreyClasses = new ConcurrentHashMap<>(PROBABILITY_TO_EAT.get(hunter.getClass()));
             // get class of herbivore with probability to eating
             int probablyToEat = (ThreadLocalRandom.current().nextInt(10) + 1) * 10;
             Class<? extends Creature> preyClass = null;
@@ -70,6 +78,7 @@ public class EatProcess {
             }
             // hunter is hungry and so his health is decreasing
             if (!hasEaten) {
+//                Main.log.info(hunter + " is hungry and must die");
                 int newHunterHealth = health.decrease(hunter);
                 if (newHunterHealth > 0) {
                     creatures.get(idCreatureInList).setHealth(newHunterHealth);
@@ -77,6 +86,7 @@ public class EatProcess {
                 // if health = 0 then animal must die. Remove hunter from cell
                 else {
                     someCell.deleteCreature(hunter);
+//                    Main.log.info("!!! " + hunter + " has deleted !!!");
                 }
             }
         }

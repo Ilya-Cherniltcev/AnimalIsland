@@ -10,16 +10,15 @@ import javaRush.module2.model.plant.Plant;
 import lombok.AccessLevel;
 import lombok.Getter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Getter
 public class SelectCreature {
     @Getter(AccessLevel.PRIVATE)
-    private Map<Point, Cell> mapIsland;
+    private ConcurrentMap<Point, Cell> mapIsland;
     private List<Animal> animals;
     private List<Predator> predators;
     private List<Herbivore> herbivores;
@@ -27,18 +26,21 @@ public class SelectCreature {
 
     private List<Creature> creatures;
 
-    public SelectCreature(Map<Point, Cell> mapIsland) {
+    public SelectCreature(ConcurrentMap<Point, Cell> mapIsland) {
         this.mapIsland = mapIsland;
-        this.animals = new ArrayList<>();
-        this.predators = new ArrayList<>();
-        this.herbivores = new ArrayList<>();
-        this.plants = new ArrayList<>();
-        this.creatures = new ArrayList<>();
+        this.animals = new CopyOnWriteArrayList<>();
+        this.predators = new CopyOnWriteArrayList<>();
+        this.herbivores = new CopyOnWriteArrayList<>();
+        this.plants = new CopyOnWriteArrayList<>();
+        this.creatures = new CopyOnWriteArrayList<>();
         getAllCreatures();
     }
 
-
-    private void getAllCreatures() {
+    /**
+     * Getting of all creatures on the island
+     * and add them to lists
+     */
+    private synchronized void getAllCreatures() {
         for (Map.Entry<Point, Cell> entry : mapIsland.entrySet()) {
             Cell tempCell = entry.getValue();
             animals.addAll(tempCell.getAnimals());

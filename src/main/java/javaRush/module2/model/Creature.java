@@ -1,8 +1,6 @@
 package javaRush.module2.model;
 
 import javaRush.module2.interfaces.Reproducible;
-import lombok.AccessLevel;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

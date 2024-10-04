@@ -2,29 +2,33 @@ package javaRush.module2.service;
 
 import javaRush.module2.model.Cell;
 import javaRush.module2.model.Point;
-import javaRush.module2.model.animal.Animal;
-
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.logging.Logger;
 
 import static javaRush.module2.service.CreatureSettings.ASTERICS_LINE;
 import static javaRush.module2.service.CreatureSettings.LINE;
 
-public class Report {
-    private final Map<Point, Cell> mapIsland;
+public class Report implements Runnable {
+    private final ConcurrentMap<Point, Cell> mapIsland;
     private SelectCreature selectCreature;
     private final int x_size;
     private final int y_size;
 
-    public Report(Map<Point, Cell> mapIsland, int x_size, int y_size) {
+
+    public Report(ConcurrentMap<Point, Cell> mapIsland, int x_size, int y_size) {
         this.mapIsland = mapIsland;
         this.x_size = x_size;
         this.y_size = y_size;
 
     }
 
-    public void printIslandInfo() {
+    /**
+     * Printing of report of all island
+     *
+     */
+    @Override
+    public void run() {
+//        Main.log.info("Begin printing island's info...");
         selectCreature = new SelectCreature(mapIsland);
         /* print island's cells (rows and columns)
         ___________________________________________
@@ -46,33 +50,19 @@ public class Report {
             System.out.println();
         }
         System.out.println(ASTERICS_LINE);
+//        Main.log.info("... info has printed. The end");
     }
 
-
+    /**
+     * Printing of report of a specific cell
+     *
+     * @param cell  cell which must be printed
+     */
     public void printCellInfo(Cell cell) {
-
         int predatorNumber = cell.getPredators().size();
         int herbivoresNumber = cell.getHerbivores().size();
         int plantsNumber = cell.getPlants().size();
         System.out.print(" | \uD83D\uDC79 " + predatorNumber + " \uD83D\uDC07 " + herbivoresNumber + " \uD83C\uDF3F " + plantsNumber);
-    }
-
-    public void printAnimalsCoordinates(List<? extends Animal> animals) {
-        int row = 0;
-        int column = 0;
-        for (Animal animal : animals) {
-            System.out.printf(" ID-%d (x=%d, y=%d)", animal.getId(), animal.getX(), animal.getY());
-            column++;
-            if (column > 15) {
-                column = 0;
-                row++;
-                System.out.println();
-            }
-            if (row > 15) {
-                System.out.println(LINE);
-                row = 0;
-            }
-        }
     }
 }
 

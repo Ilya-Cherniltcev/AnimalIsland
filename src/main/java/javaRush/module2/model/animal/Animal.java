@@ -2,20 +2,18 @@ package javaRush.module2.model.animal;
 
 import javaRush.module2.interfaces.Eatable;
 import javaRush.module2.interfaces.Moveable;
-import javaRush.module2.interfaces.Reproducible;
 import javaRush.module2.model.Point;
 import javaRush.module2.model.Creature;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Objects;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Setter
 @Getter
 public abstract class Animal extends Creature implements Eatable, Moveable {
 
-//    private int health;
     private int speed;
     private double kgToFullSaturation;
 
@@ -29,7 +27,6 @@ public abstract class Animal extends Creature implements Eatable, Moveable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-//        if (!super.equals(o)) return false;
         Animal animal = (Animal) o;
         return speed == animal.speed && kgToFullSaturation == animal.kgToFullSaturation;
     }
@@ -84,12 +81,11 @@ public abstract class Animal extends Creature implements Eatable, Moveable {
             newPoint.setY(yOld);
             return newPoint;
         }
-        Random random = new Random();
-        int movingSpeed = random.nextInt(speed) + 1;
-        int movingSpeedX = random.nextInt(movingSpeed);
+        int movingSpeed = ThreadLocalRandom.current().nextInt(speed) + 1;
+        int movingSpeedX = ThreadLocalRandom.current().nextInt(movingSpeed);
         // check where we move: 1 -> right, 0 -> left
         if (movingSpeedX > 0) {
-            int rightLeft = random.nextInt(2);
+            int rightLeft = ThreadLocalRandom.current().nextInt(2);
             if (rightLeft == 0) {
                 movingSpeedX = -movingSpeedX;
             }
@@ -97,7 +93,7 @@ public abstract class Animal extends Creature implements Eatable, Moveable {
         int movingSpeedY = movingSpeed - movingSpeedX;
         // check where we move: 1 -> up, 0 -> down
         if (movingSpeedX > 0) {
-            int upDown = random.nextInt(2);
+            int upDown = ThreadLocalRandom.current().nextInt(2);
             if (upDown == 1) {
                 movingSpeedY = -movingSpeedY;
             }
@@ -108,5 +104,4 @@ public abstract class Animal extends Creature implements Eatable, Moveable {
         newPoint.setY(newY);
         return newPoint;
     }
-
 }
