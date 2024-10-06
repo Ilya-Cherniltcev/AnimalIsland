@@ -2,12 +2,15 @@ package javaRush.module2.service;
 
 import javaRush.module2.model.Cell;
 import javaRush.module2.model.Point;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.concurrent.ConcurrentMap;
 import java.util.logging.Logger;
 
 import static javaRush.module2.service.CreatureSettings.ASTERICS_LINE;
 import static javaRush.module2.service.CreatureSettings.LINE;
 
+@Slf4j
 public class Report implements Runnable {
     private final ConcurrentMap<Point, Cell> mapIsland;
     private SelectCreature selectCreature;
@@ -28,7 +31,6 @@ public class Report implements Runnable {
      */
     @Override
     public void run() {
-//        Main.log.info("Begin printing island's info...");
         selectCreature = new SelectCreature(mapIsland);
         /* print island's cells (rows and columns)
         ___________________________________________
@@ -50,7 +52,6 @@ public class Report implements Runnable {
             System.out.println();
         }
         System.out.println(ASTERICS_LINE);
-//        Main.log.info("... info has printed. The end");
     }
 
     /**

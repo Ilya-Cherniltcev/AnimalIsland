@@ -7,11 +7,13 @@ import javaRush.module2.model.animal.Animal;
 import javaRush.module2.model.animal.herbivore.Herbivore;
 import javaRush.module2.model.animal.predator.Predator;
 import javaRush.module2.model.plant.Plant;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+@Slf4j
 public class MovingProcess implements Runnable {
     private final int x_size;
     private final int y_size;
@@ -42,6 +44,7 @@ public class MovingProcess implements Runnable {
      */
     @Override
     public void run() {
+        log.info("MovingProcess started...");
         // let animals move
         for (Creature each : creatures) {
             // plant can't move - skip iteration
@@ -70,13 +73,14 @@ public class MovingProcess implements Runnable {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                log.warn("Something is wrong: " + e.getMessage());
             }
             // if animalsInNewCell < maxAnimalsInTheCell animal can move to new coordinates
             if (animalsInNewCell < maxAnimalsInTheCell) {
                 // change x, y of animal to new
                 animal.setX(newCoordinates.getX());
                 animal.setY(newCoordinates.getY());
+                log.info(animal + " has changed position");
                 // add animal to new cell
                 mapIsland.get(newCoordinates).addCreature(animal);
                 // delete animal from old cell

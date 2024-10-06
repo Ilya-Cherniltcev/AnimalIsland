@@ -1,12 +1,14 @@
 package javaRush.module2.model;
 
 import javaRush.module2.service.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 import java.util.concurrent.*;
 
 import static javaRush.module2.service.CreatureSettings.LINE;
 
+@Slf4j
 public class Island {
 
     private final int x_size;
@@ -43,6 +45,7 @@ public class Island {
      *
      */
     public void lifeIsStarting() {
+            log.info("Starting ScheduledExecutorService tasks...");
             ScheduledExecutorService service = new ScheduledThreadPoolExecutor(4);
             service.scheduleAtFixedRate(new Report(mapIsland, x_size, y_size), 0, 2, TimeUnit.SECONDS);
             service.scheduleAtFixedRate(new EatProcess(mapIsland), 1, 1, TimeUnit.SECONDS);
@@ -62,6 +65,7 @@ public class Island {
                 service.shutdownNow();
                 System.out.println("---------------  GAME OVER... ------------- " );
                 System.exit(0);
+                log.info("Interrupt application by pressing Enter");
             }).start();
     }
 }

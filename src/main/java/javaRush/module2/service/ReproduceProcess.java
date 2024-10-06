@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-//@Slf4j
+@Slf4j
 public class ReproduceProcess implements Runnable {
 
     private final int x_size;
@@ -35,6 +35,7 @@ public class ReproduceProcess implements Runnable {
      */
     @Override
     public void run() {
+        log.info("ReprodeceProcess starting...");
         // make clone of mapIsland
         ConcurrentMap<Point, Cell> copyMapIsland = new ConcurrentHashMap<>(mapIsland);
         for (int x = 0; x < x_size; x++) {
@@ -74,7 +75,7 @@ public class ReproduceProcess implements Runnable {
                                     mapIsland.put(point, thisCell);
                                 } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
                                          InvocationTargetException e) {
-                                    e.printStackTrace();
+                                    log.warn("Something is wrong in ReproduceProcess " + e.getMessage());
                                 }
 
                             }

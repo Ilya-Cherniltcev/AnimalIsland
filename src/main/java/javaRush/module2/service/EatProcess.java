@@ -6,6 +6,7 @@ import javaRush.module2.model.Creature;
 import javaRush.module2.model.Point;
 import javaRush.module2.model.animal.Animal;
 import javaRush.module2.model.plant.Plant;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,6 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static javaRush.module2.service.CreatureSettings.PROBABILITY_TO_EAT;
 
+@Slf4j
 public class EatProcess implements Runnable{
     private volatile Health health = new Health();
     private ConcurrentMap<Point, Cell> mapIsland;
@@ -24,6 +26,7 @@ public class EatProcess implements Runnable{
     }
 
     public void run() {
+        log.info("EatProcess.Class. Method run() has started");
             for (Map.Entry<Point, Cell> entry : mapIsland.entrySet()) {
                 entry.setValue(eatingInCell(entry.getValue()));
             }
@@ -53,6 +56,7 @@ public class EatProcess implements Runnable{
             ConcurrentMap<Class<? extends Creature>, Integer> possiblePreyClasses = new ConcurrentHashMap<>(PROBABILITY_TO_EAT.get(hunter.getClass()));
             // get class of herbivore with probability to eating
             int probablyToEat = (ThreadLocalRandom.current().nextInt(10) + 1) * 10;
+            log.debug("Got ThreadLocalRandom number: probablyToEat = " + probablyToEat);
             Class<? extends Creature> preyClass = null;
             for (Map.Entry<Class<? extends Creature>, Integer> clazz : possiblePreyClasses.entrySet()) {
                 if (probablyToEat >= clazz.getValue()) {
@@ -66,6 +70,7 @@ public class EatProcess implements Runnable{
             for (Creature prey : preys) {
                 if (preyClass != null && prey.getClass() == preyClass) {
                     // now we can eat!
+                    log.debug(hunter + " eats " + prey);
                     Animal animal = (Animal) hunter;
                     int newHunterHealth = animal.eat(animal, prey);
                     // set new health
@@ -78,15 +83,15 @@ public class EatProcess implements Runnable{
             }
             // hunter is hungry and so his health is decreasing
             if (!hasEaten) {
-//                Main.log.info(hunter + " is hungry and must die");
                 int newHunterHealth = health.decrease(hunter);
                 if (newHunterHealth > 0) {
+                    log.debug(hunter + " is hungry and must decreased health");
                     creatures.get(idCreatureInList).setHealth(newHunterHealth);
                 }
                 // if health = 0 then animal must die. Remove hunter from cell
                 else {
                     someCell.deleteCreature(hunter);
-//                    Main.log.info("!!! " + hunter + " has deleted !!!");
+                    log.debug("!!! " + hunter + " is hungry and has deleted !!!");
                 }
             }
         }
